@@ -42,7 +42,7 @@ namespace Fabio.Web.ServiceTests
                 CalculationType = 1
             });
 
-            response.StatusCode.Should().Be(HttpStatusCode.BadRequest);
+            response.ShouldHaveStatusCode(HttpStatusCode.BadRequest);
             response.ShouldHaveError("A", "The field A must be between 0 and 1.");
         }
 
@@ -56,7 +56,7 @@ namespace Fabio.Web.ServiceTests
                 CalculationType = 1
             });
 
-            response.StatusCode.Should().Be(HttpStatusCode.BadRequest);
+            response.ShouldHaveStatusCode(HttpStatusCode.BadRequest);
             response.ShouldHaveError("B", "The field B must be between 0 and 1.");
         }
 
@@ -70,7 +70,7 @@ namespace Fabio.Web.ServiceTests
                 CalculationType = 2000
             });
 
-            response.StatusCode.Should().Be(HttpStatusCode.BadRequest);
+            response.ShouldHaveStatusCode(HttpStatusCode.BadRequest);
             response.ShouldHaveError("CalculationType", "The CalculationType specified is not valid.");
         }
 
