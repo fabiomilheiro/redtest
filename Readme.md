@@ -40,6 +40,10 @@ curl -X POST \
 }
 ```
 
+You may also play with the API using swagger: https://localhost:5001/swagger/ui/index.html
+
+Alternatively, you may use the respective frontend: https://github.com/fabiomilheiro/redtest-fe
+
 ## Technical implementation summary
 
 ### ICalculation
