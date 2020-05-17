@@ -48,7 +48,7 @@ Alternatively, you may use the respective frontend: https://github.com/fabiomilh
 
 ### ICalculation
 
-Abstraction to that calculations must implement.
+Abstraction that calculations must implement.
 
 By forcing the need to implement an interface, we allow for more calculations to be introduced without the need to change other working parts of the program.
 
@@ -70,7 +70,7 @@ Orchestrator that calls validation, the calculation factory, the repository and 
 
 The repository used to save calculation data. Current implementation is files.
 
-### Models
+### Models namespace
 
 The models exposed to the client.
 
@@ -82,7 +82,7 @@ I used TDD approach to develop each of the parts of the app described above.
 
 I created another project to also test the service as a component in order to prove that all parts of the app integrate well with each other.
 
-I took care not to test individual class features that are already tests in the class tests.
+I took care not to test individual class features that are already tested in the class tests.
 
 How I implemented this was using the `WebApplicationFactory` to create an app and client for each test.
 
