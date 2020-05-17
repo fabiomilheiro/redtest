@@ -2,9 +2,11 @@ using System;
 using System.IO;
 using System.IO.Abstractions;
 using System.Reflection;
+using System.Text.RegularExpressions;
 using Fabio.Web.Calculations;
 using Fabio.Web.DataAccess;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Cors.Infrastructure;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -15,17 +17,20 @@ namespace Fabio.Web
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
+        public Startup(IConfiguration configuration, IWebHostEnvironment environment)
         {
             Configuration = configuration;
+            Environment = environment;
         }
 
         public IConfiguration Configuration { get; }
+        public IWebHostEnvironment Environment { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+            services.AddCors(AddCorsPolicy);
 
             services.AddScoped<ICalculationService, CalculationService>();
             services.AddScoped<ICalculationFactory, CalculationFactory>();
@@ -59,6 +64,8 @@ namespace Fabio.Web
                 app.UseDeveloperExceptionPage();
             }
 
+            app.UseCors("Default");
+
             app.UseSwagger();
 
             app.UseSwaggerUI(options =>
@@ -76,6 +83,24 @@ namespace Fabio.Web
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+            });
+        }
+
+        private void AddCorsPolicy(CorsOptions options)
+        {
+            options.AddPolicy("Default", builder =>
+            {
+                if (Environment.IsDevelopment())
+                {
+                    builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader();
+                }
+                else
+                {
+                    builder
+                        .SetIsOriginAllowed(origin => Regex.IsMatch(origin, "^https://fabio-redington.azurewebsites.net$"))
+                        .AllowAnyMethod()
+                        .AllowAnyHeader();
+                }
             });
         }
     }
