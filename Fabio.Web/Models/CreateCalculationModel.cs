@@ -10,7 +10,7 @@ namespace Fabio.Web.Models
         /// </summary>
         /// <example>0.5</example>
         [Required]
-        [Range(0, 1)]
+        [Range(0, 1d)]
         public double? A { get; set; }
         
         /// <summary>
@@ -18,7 +18,7 @@ namespace Fabio.Web.Models
         /// </summary>
         /// <example>0.6</example>
         [Required]
-        [Range(0, 1)]
+        [Range(0, 1d)]
         public double? B { get; set; }
         
         /// <summary>
